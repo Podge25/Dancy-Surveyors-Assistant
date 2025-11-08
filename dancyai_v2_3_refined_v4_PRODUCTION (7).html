@@ -444,7 +444,7 @@
         }
 
         .filter-btn {
-            padding: 10px 14px;
+            padding: 12px 14px;
             background: white;
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -454,6 +454,7 @@
             cursor: pointer;
             text-align: left;
             transition: all 0.2s;
+            min-height: 44px;
         }
 
         .filter-btn:hover {
@@ -580,6 +581,7 @@
             color: var(--text-light);
             cursor: pointer;
             transition: all 0.2s;
+            min-height: 44px;
         }
 
         .font-btn:hover {
@@ -703,8 +705,8 @@
         <div id="manager" class="tab-content">
             <!-- Mode Toggle -->
             <div class="mode-toggle">
-                <button class="mode-btn active" onclick="setMode('field')">⚡ Field Tool Mode</button>
-                <button class="mode-btn" onclick="setMode('library')">📖 Library Manager Mode</button>
+                <button class="mode-btn active" onclick="setMode('field', event)">⚡ Field Tool Mode</button>
+                <button class="mode-btn" onclick="setMode('library', event)">📖 Library Manager Mode</button>
             </div>
 
             <!-- Stats -->
@@ -731,9 +733,9 @@
                     <option value="recent">Sort: Most Recent</option>
                 </select>
                 <div class="font-controls">
-                    <button class="font-btn" onclick="setFontSize('small')">A-</button>
-                    <button class="font-btn active" onclick="setFontSize('medium')">A</button>
-                    <button class="font-btn" onclick="setFontSize('large')">A+</button>
+                    <button class="font-btn" onclick="setFontSize('small', event)">A-</button>
+                    <button class="font-btn active" onclick="setFontSize('medium', event)">A</button>
+                    <button class="font-btn" onclick="setFontSize('large', event)">A+</button>
                 </div>
                 <button class="btn btn-danger btn-sm" onclick="confirmClearLibrary()">🗑️ Clear All</button>
             </div>
@@ -742,17 +744,17 @@
             <div class="manager-layout">
                 <!-- Sidebar Filters -->
                 <div class="sidebar">
-                    <button class="filter-btn active" onclick="filterBySection('all')">All Sections</button>
-                    <button class="filter-btn" onclick="filterBySection('A')">Section A</button>
-                    <button class="filter-btn" onclick="filterBySection('B')">Section B</button>
-                    <button class="filter-btn" onclick="filterBySection('C')">Section C</button>
-                    <button class="filter-btn" onclick="filterBySection('D')">Section D</button>
-                    <button class="filter-btn" onclick="filterBySection('E')">Section E</button>
-                    <button class="filter-btn" onclick="filterBySection('F')">Section F</button>
-                    <button class="filter-btn" onclick="filterBySection('G')">Section G</button>
-                    <button class="filter-btn" onclick="filterBySection('H')">Section H</button>
-                    <button class="filter-btn" onclick="filterBySection('I')">Section I</button>
-                    <button class="filter-btn" onclick="filterBySection('J')">Section J</button>
+                    <button class="filter-btn active" onclick="filterBySection('all', event)">All Sections</button>
+                    <button class="filter-btn" onclick="filterBySection('A', event)">Section A</button>
+                    <button class="filter-btn" onclick="filterBySection('B', event)">Section B</button>
+                    <button class="filter-btn" onclick="filterBySection('C', event)">Section C</button>
+                    <button class="filter-btn" onclick="filterBySection('D', event)">Section D</button>
+                    <button class="filter-btn" onclick="filterBySection('E', event)">Section E</button>
+                    <button class="filter-btn" onclick="filterBySection('F', event)">Section F</button>
+                    <button class="filter-btn" onclick="filterBySection('G', event)">Section G</button>
+                    <button class="filter-btn" onclick="filterBySection('H', event)">Section H</button>
+                    <button class="filter-btn" onclick="filterBySection('I', event)">Section I</button>
+                    <button class="filter-btn" onclick="filterBySection('J', event)">Section J</button>
                 </div>
 
                 <!-- Main Content -->
@@ -1037,13 +1039,24 @@ D3: UPVC rainwater goods..." style="min-height: 300px;"></textarea>
         }
 
         // ==================== FONT SIZE CONTROLS ====================
-        function setFontSize(size) {
+        function setFontSize(size, event) {
             const root = document.documentElement;
             const buttons = document.querySelectorAll('.font-btn');
-            
+
             buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                // Programmatic call - find button by size
+                buttons.forEach((btn, index) => {
+                    if ((size === 'small' && index === 0) ||
+                        (size === 'medium' && index === 1) ||
+                        (size === 'large' && index === 2)) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
             switch(size) {
                 case 'small':
                     root.style.setProperty('--current-font-size', 'var(--font-size-small)');
@@ -1054,7 +1067,7 @@ D3: UPVC rainwater goods..." style="min-height: 300px;"></textarea>
                 default:
                     root.style.setProperty('--current-font-size', 'var(--font-size-medium)');
             }
-            
+
             localStorage.setItem(STORAGE_KEYS.fontSize, size);
             showToast(`Font size: ${size}`, 'info');
         }
@@ -1243,13 +1256,23 @@ D3: UPVC rainwater goods..." style="min-height: 300px;"></textarea>
         }
 
         // ==================== MODE MANAGEMENT ====================
-        function setMode(mode) {
+        function setMode(mode, event) {
             currentMode = mode;
             localStorage.setItem(STORAGE_KEYS.mode, mode);
 
             const buttons = document.querySelectorAll('.mode-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                // Programmatic call - find button by mode
+                buttons.forEach(btn => {
+                    if ((mode === 'field' && btn.textContent.includes('Field')) ||
+                        (mode === 'library' && btn.textContent.includes('Library'))) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
 
             renderParagraphs();
             showToast(mode === 'field' ? '⚡ Field Tool Mode' : '📖 Library Manager Mode', 'info');
@@ -1271,13 +1294,26 @@ D3: UPVC rainwater goods..." style="min-height: 300px;"></textarea>
         }
 
         // ==================== LIBRARY MANAGEMENT ====================
-        function filterBySection(section) {
+        function filterBySection(section, event) {
             currentFilter = section;
-            
+
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
+
+            // Find and activate the correct button
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                // Programmatic call - find button by section
+                buttons.forEach(btn => {
+                    const btnText = btn.textContent.trim();
+                    if ((section === 'all' && btnText === 'All Sections') ||
+                        (section !== 'all' && btnText === `Section ${section}`)) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
             renderParagraphs();
         }
 
@@ -1690,7 +1726,21 @@ D3: UPVC rainwater goods..." style="min-height: 300px;"></textarea>
             try {
                 localStorage.setItem(STORAGE_KEYS.library, JSON.stringify(paragraphLibrary));
             } catch (e) {
-                showToast('Error saving to storage: ' + e.message, 'error');
+                if (e.name === 'QuotaExceededError') {
+                    // Attempt recovery: auto-export backup before failing
+                    showToast('Storage full! Auto-exporting backup...', 'warning');
+                    const data = {
+                        library: paragraphLibrary,
+                        exported: new Date().toISOString(),
+                        version: '2.3',
+                        autoBackup: true
+                    };
+                    const filename = 'dancyai_emergency_backup_' + new Date().toISOString().split('T')[0] + '.json';
+                    downloadJSON(data, filename);
+                    showToast('Emergency backup saved. Please free up storage.', 'error');
+                } else {
+                    showToast('Error saving to storage: ' + e.message, 'error');
+                }
             }
         }
 
@@ -1709,7 +1759,12 @@ D3: UPVC rainwater goods..." style="min-height: 300px;"></textarea>
             try {
                 localStorage.setItem(STORAGE_KEYS.parser, JSON.stringify(parsedSections));
             } catch (e) {
-                showToast('Error saving parser data: ' + e.message, 'error');
+                if (e.name === 'QuotaExceededError') {
+                    // Parser data is temporary, can be safely discarded
+                    showToast('Storage full. Parser data not saved (temporary data).', 'warning');
+                } else {
+                    showToast('Error saving parser data: ' + e.message, 'error');
+                }
             }
         }
 
@@ -1831,6 +1886,14 @@ D3: UPVC rainwater goods..." style="min-height: 300px;"></textarea>
                 if (activeTab && activeTab.id === 'parser') {
                     parseInput();
                 }
+            }
+
+            // Ctrl/Cmd + M: Toggle between Field/Library mode
+            if ((e.ctrlKey || e.metaKey) && e.key === 'm') {
+                e.preventDefault();
+                const newMode = currentMode === 'field' ? 'library' : 'field';
+                setMode(newMode);
+                showTab('manager');
             }
         });
     </script>
