@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#003366">
+    <meta name="robots" content="noindex, nofollow">
+    <title>DancyAI v2.3 REFINED v4 - Professional Surveying Tool</title>
+    <style>
+        /* ==================== CSS VARIABLES ==================== */
+        :root {
+            /* Primary Brand Colors */
+            --dancyai-blue: #003366;
+            --dancyai-blue-light: #004C99;
+            --dancyai-blue-dark: #002244;
+            
+            /* Functional Colors */
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --info: #17a2b8;
+            
+            /* UI Colors */
+            --text-dark: #2c3e50;
+            --text-light: #6c757d;
+            --text-muted: #999999;
+            --border: #dee2e6;
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
+            
+            /* Interactive States */
+            --hover-bg: #f1f3f5;
+            --active-bg: #e9ecef;
+            
+            /* Spacing System - 4px base */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 12px;
+            --spacing-lg: 16px;
+            --spacing-xl: 20px;
+            --spacing-xxl: 24px;
+            
+            /* Font Size System */
+            --font-size-small: 13px;
+            --font-size-medium: 15px;
+            --font-size-large: 17px;
+            --current-font-size: var(--font-size-medium);
+        }
+
+        /* ==================== GLOBAL STYLES ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--background);
+        }
+
+        /* ==================== HEADER ==================== */
+        .header {
+            background: var(--dancyai-blue);
+            color: white;
+            padding: 12px var(--spacing-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            height: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .header-subtitle {
+            font-size: 12px;
+            opacity: 0.85;
+            margin-top: 2px;
+        }
+
+        /* ==================== TABS ==================== */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            border-bottom: 2px solid var(--border);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            background: white;
+            position: sticky;
+            top: 52px;
+            z-index: 90;
+            padding: 0 var(--spacing-lg);
+            margin: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .tabs::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .tabs::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .tabs::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        .tab {
+            padding: 10px 14px;
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .tab:hover {
+            background: var(--hover-bg);
+            color: var(--text-dark);
+        }
+
+        .tab.active {
+            color: var(--dancyai-blue);
+            border-bottom-color: var(--dancyai-blue);
+            font-weight: 600;
+        }
+
+        /* ==================== CONTAINER ==================== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-xl);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ==================== CARDS ==================== */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: box-shadow 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .card-content {
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-md);
+            font-size: var(--current-font-size);
+            user-select: text;
+        }
+
+        /* ==================== BADGES ==================== */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-section {
+            background: var(--dancyai-blue);
+            color: white;
+        }
+
+        .badge-usage {
+            background: var(--hover-bg);
+            color: var(--text-dark);
+            border: 1px solid var(--border);
+        }
+
+        /* ==================== META INFO ==================== */
+        .meta-info {
+            display: flex;
+            gap: var(--spacing-lg);
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: var(--spacing-sm);
+            padding-top: var(--spacing-sm);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ==================== BUTTONS ==================== */
+        .btn-group {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-primary {
+            background: var(--dancyai-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--dancyai-blue-dark);
+        }
+
+        .btn-secondary {
+            background: var(--text-light);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--text-dark);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ==================== MODE TOGGLE ==================== */
+        .mode-toggle {
+            display: flex;
+            gap: var(--spacing-sm);
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: var(--spacing-xs);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 10px 16px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mode-btn:hover {
+            background: var(--hover-bg);
+            color: var(--text-dark);
+        }
+
+        .mode-btn.active {
+            background: var(--dancyai-blue);
+            color: white;
+        }
+
+        /* ==================== STATS ==================== */
+        .stats {
+            display: flex;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dancyai-blue);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ==================== CONTROLS ==================== */
+        .controls {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* ==================== FORM ELEMENTS ==================== */
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-dark);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--dancyai-blue);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ==================== SEARCH BOX ==================== */
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cpath d='m21 21-4.35-4.35'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 12px center;
+            background-size: 18px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--dancyai-blue);
+        }
+
+        /* ==================== MANAGER LAYOUT ==================== */
+        .manager-layout {
+            display: flex;
+            gap: var(--spacing-lg);
+        }
+
+        .sidebar {
+            flex-shrink: 0;
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .filter-btn {
+            padding: 10px 14px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dark);
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: var(--hover-bg);
+        }
+
+        .filter-btn.active {
+            background: var(--dancyai-blue);
+            color: white;
+            border-color: var(--dancyai-blue);
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        /* ==================== SECTION DIVIDER ==================== */
+        .section-divider {
+            margin: var(--spacing-xxl) 0 var(--spacing-lg) 0;
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid var(--dancyai-blue);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dancyai-blue);
+        }
+
+        /* ==================== EMPTY STATE ==================== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
+        /* ==================== TOAST ==================== */
+        #toastContainer {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .toast {
+            background: white;
+            border-left: 4px solid;
+            border-radius: 6px;
+            padding: 12px 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            min-width: 300px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.success { border-left-color: var(--success); }
+        .toast.error { border-left-color: var(--danger); }
+        .toast.warning { border-left-color: var(--warning); }
+        .toast.info { border-left-color: var(--info); }
+
+        .toast-icon {
+            font-size: 20px;
+        }
+
+        .toast-message {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        .toast.removing {
+            animation: slideOut 0.3s ease;
+        }
+
+        /* ==================== FONT SIZE CONTROLS ==================== */
+        .font-controls {
+            display: flex;
+            gap: var(--spacing-xs);
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: var(--spacing-xs);
+        }
+
+        .font-btn {
+            padding: 6px 12px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .font-btn:hover {
+            background: var(--hover-bg);
+            color: var(--text-dark);
+        }
+
+        .font-btn.active {
+            background: var(--dancyai-blue);
+            color: white;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--spacing-md);
+            }
+
+            .tabs {
+                padding: 0 var(--spacing-md);
+            }
+
+            .tab {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+
+            .stat-card {
+                min-width: 100%;
+            }
+
+            .manager-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                gap: 6px;
+            }
+
+            .filter-btn {
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .mode-toggle {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .mode-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>🏠 DancyAI v2.3 REFINED v4</h1>
+        <div class="header-subtitle">Professional RICS Building Survey Tool with Dual-Mode Paragraph Manager</div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab" onclick="showTab('parser')">🔍 Site Note Parser</button>
+        <button class="tab" onclick="showTab('manager')">📚 Paragraph Manager</button>
+        <button class="tab" onclick="showTab('add')">➕ Add Paragraph</button>
+        <button class="tab" onclick="showTab('import')">📥 Import Paragraphs</button>
+        <button class="tab" onclick="showTab('exportParser')">💾 Export/Import Parser</button>
+        <button class="tab" onclick="showTab('exportLibrary')">📦 Export/Import Library</button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- TAB 1: Site Note Parser -->
+        <div id="parser" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>🔍 Site Note Parser</h2>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Paste Dragon Anywhere Site Notes:</label>
+                    <textarea id="parserInput" class="form-textarea" placeholder="Paste your site notes with section codes (A1:, D1:, etc.)..." style="min-height: 200px;"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="parseInput()">🔍 Parse Notes (Ctrl+P)</button>
+                    <button class="btn btn-secondary" onclick="clearParser()">🗑️ Clear</button>
+                </div>
+            </div>
+
+            <div id="parserOutput"></div>
+        </div>
+
+        <!-- TAB 2: Paragraph Manager -->
+        <div id="manager" class="tab-content">
+            <!-- Mode Toggle -->
+            <div class="mode-toggle">
+                <button class="mode-btn active" onclick="setMode('field')">⚡ Field Tool Mode</button>
+                <button class="mode-btn" onclick="setMode('library')">📖 Library Manager Mode</button>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalParagraphs">0</div>
+                    <div class="stat-label">Total Paragraphs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalCopies">0</div>
+                    <div class="stat-label">Total Copies Made</div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <div class="search-box">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search paragraphs... (Ctrl+K)" oninput="searchParagraphs()">
+                </div>
+                <select id="sortSelect" class="form-select" style="width: auto; min-width: 180px;" onchange="sortParagraphs()">
+                    <option value="section">Sort: By Section</option>
+                    <option value="frequency">Sort: Most Used</option>
+                    <option value="alpha">Sort: A-Z</option>
+                    <option value="recent">Sort: Most Recent</option>
+                </select>
+                <div class="font-controls">
+                    <button class="font-btn" onclick="setFontSize('small')">A-</button>
+                    <button class="font-btn active" onclick="setFontSize('medium')">A</button>
+                    <button class="font-btn" onclick="setFontSize('large')">A+</button>
+                </div>
+                <button class="btn btn-danger btn-sm" onclick="confirmClearLibrary()">🗑️ Clear All</button>
+            </div>
+
+            <!-- Manager Layout -->
+            <div class="manager-layout">
+                <!-- Sidebar Filters -->
+                <div class="sidebar">
+                    <button class="filter-btn active" onclick="filterBySection('all')">All Sections</button>
+                    <button class="filter-btn" onclick="filterBySection('A')">Section A</button>
+                    <button class="filter-btn" onclick="filterBySection('B')">Section B</button>
+                    <button class="filter-btn" onclick="filterBySection('C')">Section C</button>
+                    <button class="filter-btn" onclick="filterBySection('D')">Section D</button>
+                    <button class="filter-btn" onclick="filterBySection('E')">Section E</button>
+                    <button class="filter-btn" onclick="filterBySection('F')">Section F</button>
+                    <button class="filter-btn" onclick="filterBySection('G')">Section G</button>
+                    <button class="filter-btn" onclick="filterBySection('H')">Section H</button>
+                    <button class="filter-btn" onclick="filterBySection('I')">Section I</button>
+                    <button class="filter-btn" onclick="filterBySection('J')">Section J</button>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div id="paragraphList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Add Paragraph -->
+        <div id="add" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>➕ Add New Paragraph</h2>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">RICS Section:</label>
+                    <select id="addSection" class="form-select">
+                        <option value="">Select a section...</option>
+                        <option value="A1">A1 - Related party disclosure</option>
+                        <option value="A2">A2 - Weather conditions</option>
+                        <option value="A3">A3 - Status of property</option>
+                        <option value="B1">B1 - Overall opinion of the property</option>
+                        <option value="C1">C1 - Construction</option>
+                        <option value="C2">C2 - Means of escape</option>
+                        <option value="C3">C3 - Location</option>
+                        <option value="C4">C4 - Local environment</option>
+                        <option value="D0">D0 - Full detail of elements inspected</option>
+                        <option value="D1">D1 - Chimney stacks</option>
+                        <option value="D2">D2 - Roof coverings</option>
+                        <option value="D3">D3 - Rainwater pipes and gutters</option>
+                        <option value="D4">D4 - Main walls</option>
+                        <option value="D5">D5 - Windows</option>
+                        <option value="D6">D6 - Outside doors</option>
+                        <option value="D7">D7 - Conservatory and porches</option>
+                        <option value="D8">D8 - Other joinery and finishes</option>
+                        <option value="D9">D9 - Other (outside)</option>
+                        <option value="E0">E0 - Full details of elements inspected (inside)</option>
+                        <option value="E1">E1 - Roof structure</option>
+                        <option value="E2">E2 - Ceilings</option>
+                        <option value="E3">E3 - Walls and partitions</option>
+                        <option value="E4">E4 - Floors</option>
+                        <option value="E5">E5 - Fireplaces, chimney breasts and flues</option>
+                        <option value="E6">E6 - Built-in fittings</option>
+                        <option value="E7">E7 - Woodwork</option>
+                        <option value="E8">E8 - Bathroom fittings</option>
+                        <option value="E9">E9 - Other (inside)</option>
+                        <option value="F0">F0 - Full details of elements inspected (services)</option>
+                        <option value="F1">F1 - Electricity</option>
+                        <option value="F2">F2 - Gas</option>
+                        <option value="F3">F3 - Water</option>
+                        <option value="F4">F4 - Heating</option>
+                        <option value="F5">F5 - Water heating</option>
+                        <option value="F6">F6 - Drainage</option>
+                        <option value="F7">F7 - Common services</option>
+                        <option value="G1">G1 - Garage</option>
+                        <option value="G2">G2 - Permanent buildings and other structures</option>
+                        <option value="G3">G3 - Other (Grounds)</option>
+                        <option value="H1">H1 - Regulations</option>
+                        <option value="H2">H2 - Guarantees</option>
+                        <option value="H3">H3 - Other matters</option>
+                        <option value="I1">I1 - Risks to the building</option>
+                        <option value="I2">I2 - Risks to grounds</option>
+                        <option value="I3">I3 - Risks to people</option>
+                        <option value="J1">J1 - Insulation</option>
+                        <option value="J2">J2 - Heating</option>
+                        <option value="J3">J3 - Lighting</option>
+                        <option value="J4">J4 - Ventilation</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Paragraph Content:</label>
+                    <textarea id="addContent" class="form-textarea" placeholder="Enter paragraph content..." style="min-height: 150px;"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-success" onclick="addParagraph()">💾 Save Paragraph</button>
+                    <button class="btn btn-secondary" onclick="clearAddForm()">🗑️ Clear Form</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: Import Paragraphs -->
+        <div id="import" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>📥 Bulk Import Paragraphs</h2>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Import Format:</label>
+                    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
+                        Paste paragraphs in either format:<br>
+                        <strong>Format 1:</strong> D1: Paragraph text here<br>
+                        <strong>Format 2:</strong> D1<br>Paragraph text here
+                    </p>
+                    <textarea id="bulkImportText" class="form-textarea" placeholder="D1: Chimney on the front elevation...
+D2: Pitched roof covered with interlocking concrete tiles...
+D3: UPVC rainwater goods..." style="min-height: 300px;"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="importBulkText()">📥 Import from Text</button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('bulkImportText').value = ''">🗑️ Clear</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: Export/Import Parser -->
+        <div id="exportParser" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>💾 Export Parser Data</h2>
+                </div>
+                <p style="margin-bottom: 16px;">Export currently parsed sections as JSON for backup.</p>
+                <button class="btn btn-primary" onclick="exportParser()">📤 Export Parser Data</button>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>📥 Import Parser Data</h2>
+                </div>
+                <p style="margin-bottom: 16px;">Import previously exported parser data from JSON file.</p>
+                <div class="form-group">
+                    <input type="file" id="parserImportFile" accept=".json" onchange="importParser()" class="form-input">
+                </div>
+                <button class="btn btn-secondary" onclick="clearParserImport()">🗑️ Clear</button>
+            </div>
+        </div>
+
+        <!-- TAB 6: Export/Import Library -->
+        <div id="exportLibrary" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>📤 Export Library</h2>
+                </div>
+                <p style="margin-bottom: 16px;">Export your entire paragraph library as JSON for backup.</p>
+                <button class="btn btn-primary" onclick="exportLibrary()">📦 Export Library</button>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>📥 Import Library</h2>
+                </div>
+                <p style="margin-bottom: 16px;">Import a previously exported library. This will merge with your existing paragraphs.</p>
+                <div class="form-group">
+                    <input type="file" id="libraryImportFile" accept=".json" onchange="importLibrary()" class="form-input">
+                </div>
+                <button class="btn btn-secondary" onclick="clearLibraryImport()">🗑️ Clear</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <script>
+        // ==================== CONSTANTS & CONFIGURATION ====================
+        const STORAGE_KEYS = {
+            library: 'dancyai_library',
+            parser: 'dancyai_parser',
+            fontSize: 'dancyai_font_size',
+            mode: 'dancyai_mode'
+        };
+
+        const RICS_SECTIONS = {
+            'A1': 'Related party disclosure',
+            'A2': 'Weather conditions',
+            'A3': 'Status of property',
+            'B1': 'Overall opinion of the property',
+            'C1': 'Construction',
+            'C2': 'Means of escape',
+            'C3': 'Location',
+            'C4': 'Local environment',
+            'D0': 'Full detail of elements inspected',
+            'D1': 'Chimney stacks',
+            'D2': 'Roof coverings',
+            'D3': 'Rainwater pipes and gutters',
+            'D4': 'Main walls',
+            'D5': 'Windows',
+            'D6': 'Outside doors',
+            'D7': 'Conservatory and porches',
+            'D8': 'Other joinery and finishes',
+            'D9': 'Other (outside)',
+            'E0': 'Full details of elements inspected (inside)',
+            'E1': 'Roof structure',
+            'E2': 'Ceilings',
+            'E3': 'Walls and partitions',
+            'E4': 'Floors',
+            'E5': 'Fireplaces, chimney breasts and flues',
+            'E6': 'Built-in fittings',
+            'E7': 'Woodwork',
+            'E8': 'Bathroom fittings',
+            'E9': 'Other (inside)',
+            'F0': 'Full details of elements inspected (services)',
+            'F1': 'Electricity',
+            'F2': 'Gas',
+            'F3': 'Water',
+            'F4': 'Heating',
+            'F5': 'Water heating',
+            'F6': 'Drainage',
+            'F7': 'Common services',
+            'G1': 'Garage',
+            'G2': 'Permanent buildings and other structures',
+            'G3': 'Other (Grounds)',
+            'H1': 'Regulations',
+            'H2': 'Guarantees',
+            'H3': 'Other matters',
+            'I1': 'Risks to the building',
+            'I2': 'Risks to grounds',
+            'I3': 'Risks to people',
+            'J1': 'Insulation',
+            'J2': 'Heating',
+            'J3': 'Lighting',
+            'J4': 'Ventilation'
+        };
+
+        // ==================== GLOBAL STATE ====================
+        let paragraphLibrary = [];
+        let parsedSections = [];
+        let currentFilter = 'all';
+        let currentMode = 'field';
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            loadLibraryFromStorage();
+            loadParserFromStorage();
+            loadFontSizePreference();
+            loadModePreference();
+            updateLibraryStats();
+            updateStickyNavPosition();
+            showTab('parser');
+            
+            console.log('✅ DancyAI v2.3 REFINED v4 initialized');
+            console.log(`📊 Library: ${paragraphLibrary.length} paragraphs`);
+            console.log(`💾 Parser: ${parsedSections.length} sections`);
+            console.log(`⚡ Mode: ${currentMode}`);
+        });
+
+        window.addEventListener('resize', () => {
+            updateStickyNavPosition();
+        });
+
+        // ==================== TAB NAVIGATION ====================
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            const selectedTab = document.getElementById(tabId);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+                
+                // Find and activate the corresponding button
+                const tabs = document.querySelectorAll('.tab');
+                tabs.forEach((btn, index) => {
+                    const tabOrder = ['parser', 'manager', 'add', 'import', 'exportParser', 'exportLibrary'];
+                    if (tabOrder[index] === tabId) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            // If switching to manager tab, render paragraphs
+            if (tabId === 'manager') {
+                renderParagraphs();
+            }
+        }
+
+        // ==================== STICKY POSITIONING ====================
+        function updateStickyNavPosition() {
+            const header = document.querySelector('.header');
+            const tabs = document.querySelector('.tabs');
+            if (header && tabs) {
+                const headerHeight = header.offsetHeight;
+                tabs.style.top = `${headerHeight + 4}px`;
+            }
+        }
+
+        // ==================== FONT SIZE CONTROLS ====================
+        function setFontSize(size) {
+            const root = document.documentElement;
+            const buttons = document.querySelectorAll('.font-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            switch(size) {
+                case 'small':
+                    root.style.setProperty('--current-font-size', 'var(--font-size-small)');
+                    break;
+                case 'large':
+                    root.style.setProperty('--current-font-size', 'var(--font-size-large)');
+                    break;
+                default:
+                    root.style.setProperty('--current-font-size', 'var(--font-size-medium)');
+            }
+            
+            localStorage.setItem(STORAGE_KEYS.fontSize, size);
+            showToast(`Font size: ${size}`, 'info');
+        }
+
+        function loadFontSizePreference() {
+            const savedSize = localStorage.getItem(STORAGE_KEYS.fontSize) || 'medium';
+            const root = document.documentElement;
+            const buttons = document.querySelectorAll('.font-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            switch(savedSize) {
+                case 'small':
+                    root.style.setProperty('--current-font-size', 'var(--font-size-small)');
+                    buttons[0].classList.add('active');
+                    break;
+                case 'large':
+                    root.style.setProperty('--current-font-size', 'var(--font-size-large)');
+                    buttons[2].classList.add('active');
+                    break;
+                default:
+                    root.style.setProperty('--current-font-size', 'var(--font-size-medium)');
+                    buttons[1].classList.add('active');
+            }
+        }
+
+        // ==================== PARSER FUNCTIONS ====================
+        function parseInput() {
+            const input = document.getElementById('parserInput').value.trim();
+            
+            if (!input) {
+                showToast('Please enter some text to parse', 'warning');
+                return;
+            }
+
+            const sectionRegex = /(?:^|\.\s*)([A-J])(\d)\s*:\s*/gim;
+            const sections = [];
+            let lastIndex = 0;
+            let match;
+
+            // Find all section codes
+            const matches = [];
+            while ((match = sectionRegex.exec(input)) !== null) {
+                matches.push({
+                    code: match[1] + match[2],
+                    index: match.index + match[0].length
+                });
+            }
+
+            // Extract content for each section
+            for (let i = 0; i < matches.length; i++) {
+                const current = matches[i];
+                const next = matches[i + 1];
+                const endIndex = next ? next.index - (input[next.index - 1] === '.' ? 1 : 0) : input.length;
+                
+                let content = input.substring(current.index, endIndex).trim();
+                
+                // Clean up content
+                content = content.replace(/\s+/g, ' ').trim();
+                
+                if (content && RICS_SECTIONS[current.code]) {
+                    sections.push({
+                        id: 'parsed_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                        section: current.code,
+                        content: content,
+                        dateAdded: new Date().toISOString()
+                    });
+                }
+            }
+
+            if (sections.length === 0) {
+                showToast('No valid section codes found', 'warning');
+                return;
+            }
+
+            parsedSections = sections;
+            saveParserToStorage();
+            renderParsedSections();
+            showToast(`Parsed ${sections.length} section(s)`, 'success');
+        }
+
+        function renderParsedSections() {
+            const output = document.getElementById('parserOutput');
+            
+            if (parsedSections.length === 0) {
+                output.innerHTML = '';
+                return;
+            }
+
+            let html = '<div class="card"><div class="card-header"><h3>📋 Parsed Sections</h3></div>';
+            html += '<div style="margin-bottom: 16px;"><button class="btn btn-success" onclick="addParsedToLibrary()">✅ Add All to Library</button></div>';
+            
+            parsedSections.forEach(section => {
+                html += `
+                    <div class="card" style="margin-bottom: 12px;">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <span class="badge badge-section">${section.section}</span>
+                                <span>${RICS_SECTIONS[section.section]}</span>
+                            </div>
+                        </div>
+                        <div class="card-content">${section.content}</div>
+                        <div class="btn-group">
+                            <button class="btn-primary btn-sm" onclick="copyToClipboard('${escapeHtml(section.content)}', 'parser')">📋 Copy</button>
+                            <button class="btn-success btn-sm" onclick="addSingleParsed('${section.id}')">➕ Add to Library</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            output.innerHTML = html;
+        }
+
+        function addParsedToLibrary() {
+            if (parsedSections.length === 0) {
+                showToast('No parsed sections to add', 'warning');
+                return;
+            }
+
+            let addedCount = 0;
+            parsedSections.forEach(parsed => {
+                const isDuplicate = paragraphLibrary.some(p => 
+                    p.section === parsed.section && p.content === parsed.content
+                );
+                
+                if (!isDuplicate) {
+                    paragraphLibrary.push({
+                        id: 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                        section: parsed.section,
+                        content: parsed.content,
+                        dateAdded: new Date().toISOString(),
+                        usageCount: 0,
+                        lastUsed: null
+                    });
+                    addedCount++;
+                }
+            });
+
+            saveLibraryToStorage();
+            updateLibraryStats();
+            parsedSections = [];
+            saveParserToStorage();
+            document.getElementById('parserOutput').innerHTML = '';
+            
+            showToast(`Added ${addedCount} paragraph(s) to library`, 'success');
+            showTab('manager');
+        }
+
+        function addSingleParsed(id) {
+            const parsed = parsedSections.find(p => p.id === id);
+            if (!parsed) return;
+
+            const isDuplicate = paragraphLibrary.some(p => 
+                p.section === parsed.section && p.content === parsed.content
+            );
+
+            if (isDuplicate) {
+                showToast('This paragraph already exists in library', 'warning');
+                return;
+            }
+
+            paragraphLibrary.push({
+                id: 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                section: parsed.section,
+                content: parsed.content,
+                dateAdded: new Date().toISOString(),
+                usageCount: 0,
+                lastUsed: null
+            });
+
+            saveLibraryToStorage();
+            updateLibraryStats();
+            parsedSections = parsedSections.filter(p => p.id !== id);
+            saveParserToStorage();
+            renderParsedSections();
+            showToast('Paragraph added to library', 'success');
+        }
+
+        function clearParser() {
+            document.getElementById('parserInput').value = '';
+            parsedSections = [];
+            saveParserToStorage();
+            document.getElementById('parserOutput').innerHTML = '';
+            showToast('Parser cleared', 'info');
+        }
+
+        // ==================== MODE MANAGEMENT ====================
+        function setMode(mode) {
+            currentMode = mode;
+            localStorage.setItem(STORAGE_KEYS.mode, mode);
+
+            const buttons = document.querySelectorAll('.mode-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            renderParagraphs();
+            showToast(mode === 'field' ? '⚡ Field Tool Mode' : '📖 Library Manager Mode', 'info');
+        }
+
+        function loadModePreference() {
+            const savedMode = localStorage.getItem(STORAGE_KEYS.mode) || 'field';
+            currentMode = savedMode;
+
+            const buttons = document.querySelectorAll('.mode-btn');
+            buttons.forEach(btn => {
+                if ((btn.textContent.includes('Field') && savedMode === 'field') ||
+                    (btn.textContent.includes('Library') && savedMode === 'library')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        // ==================== LIBRARY MANAGEMENT ====================
+        function filterBySection(section) {
+            currentFilter = section;
+            
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            renderParagraphs();
+        }
+
+        function searchParagraphs() {
+            renderParagraphs();
+        }
+
+        function sortParagraphs() {
+            renderParagraphs();
+        }
+
+        function renderParagraphs() {
+            const listElement = document.getElementById('paragraphList');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const sortOrder = document.getElementById('sortSelect').value;
+
+            let filtered = paragraphLibrary.filter(p => {
+                const matchesFilter = currentFilter === 'all' || p.section.startsWith(currentFilter);
+                const matchesSearch = !searchTerm || 
+                    p.content.toLowerCase().includes(searchTerm) ||
+                    p.section.toLowerCase().includes(searchTerm) ||
+                    (RICS_SECTIONS[p.section] || '').toLowerCase().includes(searchTerm);
+                return matchesFilter && matchesSearch;
+            });
+
+            // Sorting
+            if (sortOrder === 'section') {
+                filtered.sort((a, b) => {
+                    if (a.section !== b.section) return a.section.localeCompare(b.section);
+                    return b.usageCount - a.usageCount;
+                });
+            } else if (sortOrder === 'frequency') {
+                filtered.sort((a, b) => {
+                    if (b.usageCount !== a.usageCount) return b.usageCount - a.usageCount;
+                    return a.section.localeCompare(b.section);
+                });
+            } else if (sortOrder === 'alpha') {
+                filtered.sort((a, b) => a.content.localeCompare(b.content));
+            } else if (sortOrder === 'recent') {
+                filtered.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+            }
+
+            if (filtered.length === 0) {
+                listElement.innerHTML = `
+                    <div class="empty-state">
+                        <h3>📭 No Paragraphs Found</h3>
+                        <p>No paragraphs match your current filters. Try adjusting your search or filters.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            let lastSection = null;
+
+            filtered.forEach(p => {
+                // Add section divider if sorting by section
+                if (sortOrder === 'section' && p.section[0] !== lastSection) {
+                    lastSection = p.section[0];
+                    html += `<div class="section-divider">Section ${lastSection}</div>`;
+                }
+
+                const dateAdded = new Date(p.dateAdded).toLocaleDateString();
+                const lastUsed = p.lastUsed ? new Date(p.lastUsed).toLocaleDateString() : 'Never';
+
+                html += `
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <span class="badge badge-section">${p.section}</span>
+                                <span>${RICS_SECTIONS[p.section] || 'Unknown Section'}</span>
+                            </div>
+                            ${currentMode === 'library' ? `<span class="badge badge-usage">Used ${p.usageCount}×</span>` : ''}
+                        </div>
+                        <div class="card-content">${p.content}</div>
+                        ${currentMode === 'library' ? `
+                            <div class="meta-info">
+                                <span>📅 Added: ${dateAdded}</span>
+                                <span>🕐 Last used: ${lastUsed}</span>
+                            </div>
+                        ` : ''}
+                        <div class="btn-group" style="margin-top: 12px;">
+                            <button class="btn-primary btn-sm" onclick="copyParagraph('${p.id}')">📋 Copy</button>
+                            ${currentMode === 'library' ? `
+                                <button class="btn-secondary btn-sm" onclick="editParagraph('${p.id}')">✏️ Edit</button>
+                                <button class="btn-danger btn-sm" onclick="deleteParagraph('${p.id}')">🗑️ Delete</button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+
+            listElement.innerHTML = html;
+        }
+
+        function copyParagraph(id) {
+            const paragraph = paragraphLibrary.find(p => p.id === id);
+            if (!paragraph) return;
+
+            copyToClipboard(paragraph.content, 'library');
+
+            // Update usage stats
+            paragraph.usageCount++;
+            paragraph.lastUsed = new Date().toISOString();
+            saveLibraryToStorage();
+            updateLibraryStats();
+            
+            // Only re-render in Library Manager mode
+            if (currentMode === 'library') {
+                renderParagraphs();
+            }
+        }
+
+        function editParagraph(id) {
+            const paragraph = paragraphLibrary.find(p => p.id === id);
+            if (!paragraph) return;
+
+            const newContent = prompt('Edit paragraph:', paragraph.content);
+            if (newContent && newContent.trim() && newContent !== paragraph.content) {
+                paragraph.content = newContent.trim();
+                saveLibraryToStorage();
+                renderParagraphs();
+                showToast('Paragraph updated', 'success');
+            }
+        }
+
+        function deleteParagraph(id) {
+            if (!confirm('Are you sure you want to delete this paragraph?')) return;
+
+            paragraphLibrary = paragraphLibrary.filter(p => p.id !== id);
+            saveLibraryToStorage();
+            updateLibraryStats();
+            renderParagraphs();
+            showToast('Paragraph deleted', 'success');
+        }
+
+        function confirmClearLibrary() {
+            if (paragraphLibrary.length === 0) {
+                showToast('Library is already empty', 'info');
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to delete all ${paragraphLibrary.length} paragraphs?`)) return;
+            if (!confirm('This action cannot be undone. Proceed?')) return;
+
+            paragraphLibrary = [];
+            saveLibraryToStorage();
+            updateLibraryStats();
+            renderParagraphs();
+            showToast('Library cleared', 'info');
+        }
+
+        // ==================== ADD PARAGRAPH ====================
+        function addParagraph() {
+            const section = document.getElementById('addSection').value;
+            const content = document.getElementById('addContent').value.trim();
+
+            if (!section) {
+                showToast('Please select a section', 'warning');
+                return;
+            }
+
+            if (!content) {
+                showToast('Please enter paragraph content', 'warning');
+                return;
+            }
+
+            const isDuplicate = paragraphLibrary.some(p => 
+                p.section === section && p.content === content
+            );
+
+            if (isDuplicate) {
+                showToast('This paragraph already exists', 'warning');
+                return;
+            }
+
+            paragraphLibrary.push({
+                id: 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                section: section,
+                content: content,
+                dateAdded: new Date().toISOString(),
+                usageCount: 0,
+                lastUsed: null
+            });
+
+            saveLibraryToStorage();
+            updateLibraryStats();
+            
+            document.getElementById('addSection').value = '';
+            document.getElementById('addContent').value = '';
+            
+            showToast('Paragraph added to library', 'success');
+            showTab('manager');
+        }
+
+        function clearAddForm() {
+            document.getElementById('addSection').value = '';
+            document.getElementById('addContent').value = '';
+            showToast('Form cleared', 'info');
+        }
+
+        // ==================== BULK IMPORT ====================
+        function importBulkText() {
+            const input = document.getElementById('bulkImportText').value.trim();
+            
+            if (!input) {
+                showToast('Please enter text to import', 'warning');
+                return;
+            }
+
+            const lines = input.split('\n').map(l => l.trim()).filter(l => l);
+            const paragraphs = [];
+            let currentSection = null;
+            let currentContent = [];
+
+            // Try inline format first (D1: content)
+            const inlineRegex = /^([A-J]\d)\s*:\s*(.+)$/;
+            let hasInlineFormat = lines.some(line => inlineRegex.test(line));
+
+            if (hasInlineFormat) {
+                lines.forEach(line => {
+                    const match = line.match(inlineRegex);
+                    if (match && RICS_SECTIONS[match[1]]) {
+                        paragraphs.push({
+                            section: match[1],
+                            content: match[2].trim()
+                        });
+                    }
+                });
+            } else {
+                // Try line format (section on one line, content on next)
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    if (/^[A-J]\d$/.test(line) && RICS_SECTIONS[line]) {
+                        if (currentSection && currentContent.length > 0) {
+                            paragraphs.push({
+                                section: currentSection,
+                                content: currentContent.join(' ').trim()
+                            });
+                        }
+                        currentSection = line;
+                        currentContent = [];
+                    } else if (currentSection) {
+                        currentContent.push(line);
+                    }
+                }
+                
+                if (currentSection && currentContent.length > 0) {
+                    paragraphs.push({
+                        section: currentSection,
+                        content: currentContent.join(' ').trim()
+                    });
+                }
+            }
+
+            if (paragraphs.length === 0) {
+                showToast('No valid paragraphs found', 'warning');
+                return;
+            }
+
+            let addedCount = 0;
+            paragraphs.forEach(p => {
+                const isDuplicate = paragraphLibrary.some(existing => 
+                    existing.section === p.section && existing.content === p.content
+                );
+
+                if (!isDuplicate) {
+                    paragraphLibrary.push({
+                        id: 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                        section: p.section,
+                        content: p.content,
+                        dateAdded: new Date().toISOString(),
+                        usageCount: 0,
+                        lastUsed: null
+                    });
+                    addedCount++;
+                }
+            });
+
+            saveLibraryToStorage();
+            updateLibraryStats();
+            document.getElementById('bulkImportText').value = '';
+            showToast(`Imported ${addedCount} paragraph(s)`, 'success');
+            showTab('manager');
+        }
+
+        // ==================== PARSER EXPORT/IMPORT ====================
+        function exportParser() {
+            if (parsedSections.length === 0) {
+                showToast('No parsed sections to export', 'warning');
+                return;
+            }
+
+            const data = {
+                sections: parsedSections,
+                exported: new Date().toISOString(),
+                version: '2.3'
+            };
+
+            const filename = 'dancyai_parser_' + new Date().toISOString().split('T')[0] + '.json';
+            downloadJSON(data, filename);
+            showToast('Parser data exported', 'success');
+        }
+
+        function importParser() {
+            const file = document.getElementById('parserImportFile').files[0];
+            if (!file) return;
+
+            if (!file.name.endsWith('.json')) {
+                showToast('Please select a JSON file', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    if (!data.sections || !Array.isArray(data.sections)) {
+                        showToast('Invalid parser data format', 'error');
+                        return;
+                    }
+
+                    parsedSections = data.sections;
+                    saveParserToStorage();
+                    renderParsedSections();
+                    showToast(`Imported ${parsedSections.length} section(s)`, 'success');
+                    showTab('parser');
+                } catch (error) {
+                    showToast('Error reading file: ' + error.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function clearParserImport() {
+            document.getElementById('parserImportFile').value = '';
+            showToast('Import cleared', 'info');
+        }
+
+        // ==================== LIBRARY EXPORT/IMPORT ====================
+        function exportLibrary() {
+            if (paragraphLibrary.length === 0) {
+                showToast('Library is empty', 'warning');
+                return;
+            }
+
+            const data = {
+                library: paragraphLibrary,
+                exported: new Date().toISOString(),
+                version: '2.3'
+            };
+
+            const filename = 'dancyai_library_' + new Date().toISOString().split('T')[0] + '.json';
+            downloadJSON(data, filename);
+            showToast('Library exported', 'success');
+        }
+
+        function importLibrary() {
+            const file = document.getElementById('libraryImportFile').files[0];
+            if (!file) return;
+
+            if (!file.name.endsWith('.json')) {
+                showToast('Please select a JSON file', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    if (!data.library || !Array.isArray(data.library)) {
+                        showToast('Invalid library data format', 'error');
+                        return;
+                    }
+
+                    let addedCount = 0;
+                    data.library.forEach(p => {
+                        const isDuplicate = paragraphLibrary.some(existing => 
+                            existing.section === p.section && existing.content === p.content
+                        );
+
+                        if (!isDuplicate) {
+                            // Generate new ID to avoid conflicts
+                            p.id = 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                            paragraphLibrary.push(p);
+                            addedCount++;
+                        }
+                    });
+
+                    saveLibraryToStorage();
+                    updateLibraryStats();
+                    showToast(`Imported ${addedCount} paragraph(s)`, 'success');
+                    showTab('manager');
+                } catch (error) {
+                    showToast('Error reading file: ' + error.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function clearLibraryImport() {
+            document.getElementById('libraryImportFile').value = '';
+            showToast('Import cleared', 'info');
+        }
+
+        // ==================== STORAGE FUNCTIONS ====================
+        function saveLibraryToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEYS.library, JSON.stringify(paragraphLibrary));
+            } catch (e) {
+                showToast('Error saving to storage: ' + e.message, 'error');
+            }
+        }
+
+        function loadLibraryFromStorage() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEYS.library);
+                if (saved) {
+                    paragraphLibrary = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error('Error loading library:', e);
+            }
+        }
+
+        function saveParserToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEYS.parser, JSON.stringify(parsedSections));
+            } catch (e) {
+                showToast('Error saving parser data: ' + e.message, 'error');
+            }
+        }
+
+        function loadParserFromStorage() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEYS.parser);
+                if (saved) {
+                    parsedSections = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error('Error loading parser data:', e);
+            }
+        }
+
+        function updateLibraryStats() {
+            const totalParagraphs = paragraphLibrary.length;
+            const totalCopies = paragraphLibrary.reduce((sum, p) => sum + p.usageCount, 0);
+            
+            document.getElementById('totalParagraphs').textContent = totalParagraphs;
+            document.getElementById('totalCopies').textContent = totalCopies;
+        }
+
+        // ==================== UTILITY FUNCTIONS ====================
+        function generateId() {
+            return 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function copyToClipboard(text, source) {
+            // Unescape text if it was escaped for HTML attributes
+            const unescapedText = text.replace(/\\'/g, "'").replace(/\\n/g, "\n").replace(/\\r/g, "\r");
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(unescapedText)
+                    .then(() => showToast('Copied to clipboard', 'success'))
+                    .catch(err => showToast('Copy failed: ' + err, 'error'));
+            } else {
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = unescapedText;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast('Copied to clipboard', 'success');
+                } catch (err) {
+                    showToast('Copy failed', 'error');
+                }
+                document.body.removeChild(textarea);
+            }
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/'/g, "\\'")
+                .replace(/\n/g, "\\n")
+                .replace(/\r/g, "\\r");
+        }
+
+        function downloadJSON(data, filename) {
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icons = {
+                success: '✅',
+                error: '❌',
+                warning: '⚠️',
+                info: 'ℹ️'
+            };
+            
+            toast.innerHTML = `
+                <span class="toast-icon">${icons[type] || icons.info}</span>
+                <span class="toast-message">${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('removing');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        container.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // ==================== KEYBOARD SHORTCUTS ====================
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + K: Focus search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) {
+                    searchInput.focus();
+                    showTab('manager');
+                }
+            }
+
+            // Ctrl/Cmd + P: Parse input
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                const activeTab = document.querySelector('.tab-content.active');
+                if (activeTab && activeTab.id === 'parser') {
+                    parseInput();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
