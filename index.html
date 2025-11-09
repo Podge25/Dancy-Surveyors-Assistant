@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#003366">
+    <title>Dancy Surveyors - Tool Selection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #003366 0%, #004C99 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+        }
+
+        .tool-card h2 {
+            font-size: 1.8rem;
+            color: #003366;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #003366;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .tool-badge.new {
+            background: #28a745;
+        }
+
+        .tool-badge.classic {
+            background: #6c757d;
+        }
+
+        .tool-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-features li {
+            padding: 0.5rem 0;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-features li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .launch-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #003366;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .launch-btn:hover {
+            background: #002244;
+        }
+
+        .dancyai-btn {
+            background: #0055a5;
+        }
+
+        .dancyai-btn:hover {
+            background: #003d7a;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-card h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 Dancy Surveyors</h1>
+            <p>Choose Your Professional Surveying Tool</p>
+        </div>
+
+        <div class="tools-grid">
+            <!-- DancyAI Tool -->
+            <a href="dancyai_v2_3_refined_v4_PRODUCTION (7).html" class="tool-card">
+                <div class="tool-card-header">
+                    <span class="tool-icon">🤖</span>
+                    <div>
+                        <h2>DancyAI v2.3</h2>
+                        <span class="tool-badge new">ADVANCED</span>
+                    </div>
+                </div>
+                <p class="tool-description">
+                    Professional RICS Building Survey Tool with AI-powered features. Parse site notes, manage paragraphs with dual-mode interface, and streamline your surveying workflow.
+                </p>
+                <ul class="tool-features">
+                    <li>Site Note Parser with auto-detection</li>
+                    <li>Dual-Mode Paragraph Manager</li>
+                    <li>Field Tool & Library Manager modes</li>
+                    <li>Smart search & filtering</li>
+                    <li>Usage analytics & tracking</li>
+                    <li>Export/Import functionality</li>
+                </ul>
+                <button class="launch-btn dancyai-btn" onclick="window.location.href='dancyai_v2_3_refined_v4_PRODUCTION (7).html'; return false;">
+                    Launch DancyAI →
+                </button>
+            </a>
+
+            <!-- Classic Dancy Tool -->
+            <a href="Dancy_Surveyors_Assistant_Corrected.html" class="tool-card">
+                <div class="tool-card-header">
+                    <span class="tool-icon">📋</span>
+                    <div>
+                        <h2>Dancy Surveyors</h2>
+                        <span class="tool-badge classic">CLASSIC</span>
+                    </div>
+                </div>
+                <p class="tool-description">
+                    Original Dancy Surveyors Assistant with pre-loaded paragraph library. Simple, reliable, and straightforward paragraph management for RICS building surveys.
+                </p>
+                <ul class="tool-features">
+                    <li>Pre-loaded paragraph library</li>
+                    <li>Section-based navigation</li>
+                    <li>One-click paragraph copying</li>
+                    <li>Clean, simple interface</li>
+                    <li>All RICS sections covered</li>
+                </ul>
+                <button class="launch-btn" onclick="window.location.href='Dancy_Surveyors_Assistant_Corrected.html'; return false;">
+                    Launch Classic Tool →
+                </button>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>Professional RICS Building Survey Tools | v2.3</p>
+        </div>
+    </div>
+
+    <script>
+        // Prevent button click from triggering parent link
+        document.querySelectorAll('.launch-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        });
+    </script>
+</body>
+</html>
