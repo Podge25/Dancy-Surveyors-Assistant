@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dancy Surveyors Assistant</title>
+  <style>
+    body {margin:0;font-family:Calibri,sans-serif;}
+    #sidebar {position:fixed;left:0;top:3rem;width:40px;height:100%;background:#003366;color:white;display:flex;flex-direction:column;align-items:center;}
+    #sidebar div {margin:1rem 0;cursor:pointer;font-size:14px;text-align:center;}
+    #sidebar .active {background:rgba(255,255,255,0.1);font-weight:bold;border-radius:4px;}
+    #sidebar div:hover {background:rgba(255,255,255,0.2);}
+    #header {position:fixed;left:40px;right:0;height:3rem;background:#003366;color:white;display:flex;justify-content:center;align-items:center;font-size:18px;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.2);}
+    #content {margin-left:40px;padding:3rem 1rem 1rem 1rem;overflow-y:auto;height:100vh;font-size:14px;}
+    h2 {font-size:16px;color:#003366;padding-left:58px;margin:1rem 0 0.5rem;}
+    h3 {font-size:15px;color:#003366;padding-left:58px;margin:1rem 0 0.5rem;}
+    .para-block {display:flex;align-items:flex-start;margin:0.5rem 0 0.5rem 16px;}
+    .para-block button {width:30px;height:30px;margin-right:12px;font-size:12px;background:#0055a5;color:white;border:none;border-radius:4px;cursor:pointer;display:flex;justify-content:center;align-items:center;}
+    .para-block button.copied {background:#006400;}
+    .para-block p {flex:1;line-height:1.5;}
+  </style>
+</head>
+<body>
+  <div id="sidebar"></div>
+  <div id="header">Dancy Surveyors</div>
+  <div id="content"></div>
+  <script>
+    const data = {
+    "A": {
+        "title": "About the inspection",
+        "subsections": [
+            {
+                "subheading": "Related party",
+                "paragraphs": [
+                    "We are not aware that there is any conflict-of-interest as defined in the RICS Valuation Standards and the RICS Rules of Conduct."
+                ]
+            },
+            {
+                "subheading": "Weather",
+                "paragraphs": [
+                    "At the time of our inspection the weather was fine and dry."
+                ]
+            },
+            {
+                "subheading": "Status of the property",
+                "paragraphs": [
+                    "The property was occupied and fully furnished. The floors were covered with fitted floor coverings throughout.",
+                    "The property was vacant and unoccupied. The floors were covered with fitted floor coverings throughout."
+                ]
+            }
+        ]
+    },
+    "B": {
+        "title": "Summary of condition ratings",
+        "subsections": [
+            {
+                "subheading": "overall opinion",
+                "paragraphs": [
+                    "The property was on the whole considered to be in a condition consistent with its type and age.\n\nA number of defects and recommendations for further investigations have been highlighted within the main body of this report, which should be considered in full.\n\nAll directions given within this report are given from the perspective of facing the front of building from the road in front of its main entrance.",
+                    "Period buildings typically require more intensive maintenance and incur higher costs compared to modern buildings.\n\nThese costs arise due to less advanced construction methods and materials and the need for specialized materials and skilled craftsmanship to preserve the original aesthetic and structural integrity. Regular upkeep is essential to address issues such as damp and timber decay.\n\nCompliance with any conservation regulations can add to these costs.",
+                    "The property forms part of a Grade I listed building. When you buy a listed building, you become a custodian of it and this comes with responsibilities.\n\nListed buildings are typically more expensive to maintain, repair and alter. Specific materials and specialist tradespeople may be required to carry out work on the property. Energy improvements such as double glazing may not be permitted.\n\nAny previous or proposed future alterations or repairs to the property are likely to require the consent of the Local Conservation Officer and may require planning permission.\n\nYou should ask your legal advisers to make enquiries of the vendor to establish whether they are aware of any alterations that have been carried out to the property. If any alterations have been carried out your legal adviser should check and confirm that all necessary permissions and consents were obtained.\n\nIf works have been carried out to the property without the necessary consent you are likely to become liable for correcting any mistakes. You should make sure that the buildings insurance covers this.\n\nYou should ask your legal advisers to confirm the buildings listed status and advise you of the implications."
+                ]
+            },
+            {
+                "subheading": "Documents we may suggest",
+                "paragraphs": [
+                    "Environmental risk assessment report."
+                ]
+            }
+        ]
+    },
+    "C": {
+        "title": "Summary of condition ratings",
+        "subsections": [
+            {
+                "subheading": "Further investigations",
+                "paragraphs": [
+                    "C: Local environment - radon.\nF1: Electricity - test recommended.\nF2: Gas - test recommended.\nF4: Heating - test recommended.\nF5: Water heating - test recommended."
+                ]
+            },
+            {
+                "subheading": "Type of property",
+                "paragraphs": [
+                    "The property comprises a  mid terrace house.",
+                    "The property comprises a semi detached house.",
+                    "The property comprises a  detached house.",
+                    "The property comprises a  semi detached bungalow.",
+                    "The property comprises a detached bungalow.",
+                    "The property comprises a converted flat",
+                    "The property comprises a purpose built flat"
+                ]
+            },
+            {
+                "subheading": "Approximate year built",
+                "paragraphs": [
+                    "The property is thought likely to have been constructed in around 1850.",
+                    "The property is thought likely to have been constructed in around 1880.",
+                    "The property is thought likely to have been constructed in around 1900",
+                    "The property is thought likely to have been constructed in around 1910.",
+                    "The property is thought likely to have been constructed in around 1920.",
+                    "The property is thought likely to have been constructed in around 1930.",
+                    "The property is thought likely to have been constructed in around 1950.",
+                    "The property is thought likely to have been constructed in around 1960.",
+                    "The property is thought likely to have been constructed in around 1970."
+                ]
+            },
+            {
+                "subheading": "Approximate year extended",
+                "paragraphs": [
+                    "The date of the construction of the is not known."
+                ]
+            },
+            {
+                "subheading": "Approximate year converted",
+                "paragraphs": [
+                    "The date of the conversion of the building into flats is not known."
+                ]
+            },
+            {
+                "subheading": "Info relevant to flats",
+                "paragraphs": [
+                    "The property comprises a floor converted flat situated in a storey converted building."
+                ]
+            },
+            {
+                "subheading": "Construction",
+                "paragraphs": [
+                    "Rendered solid masonry external elevations beneath a pitched concrete interlocking tiled main roof.",
+                    "The ground floor appears to be concrete and the first floor is suspended timber."
+                ]
+            },
+            {
+                "subheading": "Means of escape",
+                "paragraphs": [
+                    "Means of escape is available via door openings on the ground floor and window openings on the upper floors.\n\nWe have not carried out a Fire Risk Assessment of the building."
+                ]
+            },
+            {
+                "subheading": "Energy efficiency rating",
+                "paragraphs": [
+                    "The property is shown on an energy performance certificate dated  to have a rating of"
+                ]
+            },
+            {
+                "subheading": "Issues relating to energy efficiency",
+                "paragraphs": [
+                    "You should obtain a copy of the energy performance certificate for the property and consider its contents in full prior to purchase."
+                ]
+            },
+            {
+                "subheading": "Other energy sources",
+                "paragraphs": [
+                    "You should budget for future enhancements to the energy efficiency of the property."
+                ]
+            },
+            {
+                "subheading": "Grounds",
+                "paragraphs": [
+                    "The property has reasonable sized front and rear gardens."
+                ]
+            },
+            {
+                "subheading": "Location",
+                "paragraphs": [
+                    "The property is in an established residential area."
+                ]
+            },
+            {
+                "subheading": "Facilities",
+                "paragraphs": [
+                    "Local amenities and transport facilities are available nearby in"
+                ]
+            },
+            {
+                "subheading": "Local environment",
+                "paragraphs": [
+                    "UK Radon has identified this as a radon affected area. Up to % of properties may have a level of radon gas above the recommended action level and remedial action may be needed. More detailed information can be obtained from UK Radon at www.ukradon.org. See Section I3: Risks to people.\nThe property is shown on the GOV.UK website to be in an area at very low risk of flooding by rivers and the sea and at a very low risk of surface water flooding.\nSubsoils in the general location are known to be predominantly \nYou should obtain an Environmental Risk Assessment report on the property and consider its contents in full prior to purchase.",
+                    "The property is thought to be situated within a Conservation Area. You should ask your legal advisors to confirm this and explain any implications. See Section H: Issues for your legal advisors."
+                ]
+            }
+        ]
+    },
+    "D": {
+        "title": "Outside the property",
+        "subsections": [
+            {
+                "subheading": "Limitations to the inspection",
+                "paragraphs": [
+                    "The exterior of the building was inspected where visible from the adjoining public areas and gardens from ground level.",
+                    "Parts of the main roof and chimney stack could not be seen from ground level and we are unable to comment on the condition of these areas."
+                ]
+            },
+            {
+                "subheading": "Chimney stacks",
+                "paragraphs": [
+                    "A brick chimney stack is situated on the party wall with metal flashings at the junction with the roof. On the top of the stack there are clay flue pots on the side of the subject property.",
+                    "The disused flues should ideally be capped and vented at roof level and vented internally to minimise the possibility of dampness and condensation. You should appoint a reputable building contractor to carry out this work."
+                ]
+            },
+            {
+                "subheading": "Roof coverings",
+                "paragraphs": [
+                    "The main roof is pitched and has a concrete interlocking tile covering with half round ridge tiles over a felt underlay.",
+                    "Flat felt roofs have a life expectancy of around 10 - 20 years and defects often occur without any apparent warning.\nIt would be prudent to make enquiries of the vendor to ascertain when the flat felt roof was last recovered and to budget for future recovering.",
+                    "Moss growth is visible on the roof surfaces in places. We recommend that it is removed as it has a tendency to cause blockages to rainwater goods. Blocked rainwater goods are a very common cause of water ingress and dampness internally."
+                ]
+            },
+            {
+                "subheading": "Rainwater pipes and gutters",
+                "paragraphs": [
+                    "The roof drain to plastic gutters and downpipes.\nIt was not raining at the time of our inspection. The operation of the rainwater goods should be checked during heavy rainfall. Any repairs found to be necessary should be carried out as soon as possible."
+                ]
+            },
+            {
+                "subheading": "Main walls",
+                "paragraphs": [
+                    "The external elevations are of rendered solid masonry construction. The underlying nature of the construction could only be confirmed by carrying out exposure works beyond the limitations of our inspection and report.",
+                    "Bungaroosh is a form of construction typically found within the Brighton area which consists of flints bricks and lime mortar poured into timber shuttering. It can be prone to dampness and instability.",
+                    "Basement properties are prone to dampness and previous damp proofing works commonly fail after a period of time, resulting in the need for further works. You should anticipate this future expense.",
+                    "The property is of a type and age where cavity wall ties can corrode leading to the need for replacement. The cavity wall ties have not been inspected, you should anticipate this possible future expense."
+                ]
+            },
+            {
+                "subheading": "Windows",
+                "paragraphs": [
+                    "The windows are double glazed UPVC replacement units.\nAny double glazing installed after April 2002, should either have been installed by FENSA registered contractor with Building Regulation approval. You should ask your Legal Advisors to check and confirm the position.\nThe seals to double glazed windows breakdown after a period of time causing condensation to form between window panes. The only course of action at this time is to replace the defective sealed glazing units.  You should expect this to happen in due course."
+                ]
+            },
+            {
+                "subheading": "Outside doors",
+                "paragraphs": [
+                    "The property has double glazed UPVC front and rear doors.\nPlease note the advice and double glazing given in Section D5: Windows."
+                ]
+            },
+            {
+                "subheading": "Other joinery and finishes",
+                "paragraphs": [
+                    "The property is fitted with uPVC fascia and soffit boards."
+                ]
+            }
+        ]
+    },
+    "E": {
+        "title": "Inside the property",
+        "subsections": [
+            {
+                "subheading": "Limitations to the inspection",
+                "paragraphs": [
+                    "Fixtures and fittings, fitted floor coverings, furniture, stored items, personal possessions and the like restricted our inspection."
+                ]
+            },
+            {
+                "subheading": "Roof structure",
+                "paragraphs": [
+                    "The main roof is a cut pitched timber roof, the roof space was accessed via a hatch on the landing."
+                ]
+            },
+            {
+                "subheading": "Ceilings",
+                "paragraphs": [
+                    "The ceilings are presumed to be of plasterboard construction.",
+                    "Textured finishes can contain asbestos. Asbestos represents a potentially serious health hazard and should not be cut, drilled or in any other way interfered with without specialist advice.\nThe presence of asbestos can only be confirmed for certain by laboratory testing beyond the limitations of our inspection."
+                ]
+            },
+            {
+                "subheading": "Walls and partitions",
+                "paragraphs": [
+                    "The internal walls are part solid masonry and part stud partitions clad in what is assumed to be plasterboard and lath and plaster."
+                ]
+            },
+            {
+                "subheading": "Floors",
+                "paragraphs": [
+                    "The ground floor is concrete and the first floor is suspended timber."
+                ]
+            },
+            {
+                "subheading": "Built-in fittings",
+                "paragraphs": [
+                    "The kitchen is fitted with a range of average quality wall and floor mounted units which are showing signs of wear and tear."
+                ]
+            },
+            {
+                "subheading": "Woodwork",
+                "paragraphs": [
+                    "The skirting boards and architraves are of painted softwood timber construction.",
+                    "A timber staircase leads from the ground to the first floor."
+                ]
+            },
+            {
+                "subheading": "Bathroom fittings",
+                "paragraphs": [
+                    "The bathroom is fitted with an average quality suite which comprises a bath, WC and wash hand basin.",
+                    "There is currently no extractor fan within the bathroom. We recommend that an electric extractor fan is fitted to help minimise dampness and condensation."
+                ]
+            }
+        ]
+    },
+    "F": {
+        "title": "Services",
+        "subsections": [
+            {
+                "subheading": "Limitations to inspection",
+                "paragraphs": [
+                    "We have only carried out a visual inspection. The services have not been tested.\nAs we are not qualified gas or electrical engineers, we have recommended that these services are tested by qualified specialist contractors prior to purchase."
+                ]
+            },
+            {
+                "subheading": "Electricity",
+                "paragraphs": [
+                    "The property connects to the mains supply and the circuit breakers and meter are located in the",
+                    "You should arrange for the installation to be checked and tested by an NICEIC registered electrical contractor who should be able to provide with a quotation for any recommended works, prior to purchase. See Section I3: Risks to people"
+                ]
+            },
+            {
+                "subheading": "Gas/oil",
+                "paragraphs": [
+                    "The property connects the mains supply and the meter is located in \nYou should arrange for the installation to be checked and tested by a Gas Safe registered contractor prior to purchase. See Section I3: Risks to people."
+                ]
+            },
+            {
+                "subheading": "Water",
+                "paragraphs": [
+                    "The property connects to the mains supply.",
+                    "In a property of this type and age the incoming mains supply pipe may be found to be an old lead pipe. If it is found to be lead, we recommend that is replaced with plastic pipework as lead is a health risk."
+                ]
+            },
+            {
+                "subheading": "Heating",
+                "paragraphs": [
+                    "Central heating is provided by a gas boiler located in the . Heating is supplied via water filled radiators.\nYou should arrange for installation to be checked and tested by a Gas Safe registered contractor prior to purchase. See Section I3: Risks to people."
+                ]
+            },
+            {
+                "subheading": "Water heating",
+                "paragraphs": [
+                    "Hot water is provided by the same gas boiler that provides the central heating.\nYou should arrange for installation to be checked and tested by a Gas Safe registered contractor prior to purchase. See Section I3: Risks to people."
+                ]
+            },
+            {
+                "subheading": "Drainage",
+                "paragraphs": [
+                    "The property connects to the mains drainage.",
+                    "No significant defects were found in the inspection chamber"
+                ]
+            }
+        ]
+    },
+    "G": {
+        "title": "Grounds",
+        "subsections": [
+            {
+                "subheading": "Limitations to inspection",
+                "paragraphs": [
+                    "The gardens were inspected."
+                ]
+            },
+            {
+                "subheading": "Other (grounds)",
+                "paragraphs": [
+                    "The property has reasonable sized front and rear gardens."
+                ]
+            }
+        ]
+    },
+    "H": {
+        "title": "Issues for your legal advisor",
+        "subsections": [
+            {
+                "subheading": "Regulation",
+                "paragraphs": [
+                    "You should ask your legal advisers to check and confirm that all necessary permissions and consents were obtained for the"
+                ]
+            },
+            {
+                "subheading": "Guarantees",
+                "paragraphs": [
+                    "You should ask your legal advisers to check and confirm the existence of any transferable guarantees and ensure that they are assigned to you."
+                ]
+            },
+            {
+                "subheading": "Other matters",
+                "paragraphs": [
+                    "You should ask your legal advisers to check and confirm the existence of any easements or wayleaves. They should also confirm who is responsible for maintaining each of the boundaries."
+                ]
+            }
+        ]
+    },
+    "I": {
+        "title": "Risks",
+        "subsections": [
+            {
+                "subheading": "Risks to the building",
+                "paragraphs": [
+                    "F3: Walls and partitions – dampness."
+                ]
+            },
+            {
+                "subheading": "Risks to people",
+                "paragraphs": [
+                    "C: Local environment - radon.\nF1: Electricity - test recommended.\nF2: Gas - test recommended.\nF4: Heating - test recommended.\nF5: Water heating - test recommended."
+                ]
+            }
+        ]
+    },
+    "J": {
+        "title": "Energy matters",
+        "subsections": [
+            {
+                "subheading": "Insulation",
+                "paragraphs": [
+                    "We are unable to confirm what level of insulation if any has been fitted in the floors, ceilings or external walls."
+                ]
+            },
+            {
+                "subheading": "Heating",
+                "paragraphs": [
+                    "Central heating is provided by a gas boiler. Heating is supplied via water filled radiators."
+                ]
+            },
+            {
+                "subheading": "Lighting",
+                "paragraphs": [
+                    "We recommend the use of energy efficient light bulbs and fittings throughout the property."
+                ]
+            },
+            {
+                "subheading": "Ventilation",
+                "paragraphs": [
+                    "Condensation is often a problem for one occupier when it may not be for the next. It can often be controlled by careful management of the heating and ventilation.",
+                    "We have recommended the installation of roof venting tiles to ventilate the roof space."
+                ]
+            },
+            {
+                "subheading": "General",
+                "paragraphs": [
+                    "You should budget for future enhancements to the energy efficiency of the property."
+                ]
+            }
+        ]
+    }
+};
+    (function(){
+      const sidebar = document.getElementById('sidebar'), content = document.getElementById('content');
+      Object.keys(data).sort().forEach(sec => {
+        const nav = document.createElement('div');
+        nav.textContent = sec; nav.id = 'nav' + sec;
+        nav.onclick = () => document.getElementById('sec' + sec).scrollIntoView();
+        sidebar.appendChild(nav);
+        const secDiv = document.createElement('div'); secDiv.id = 'sec' + sec;
+        const h2 = document.createElement('h2'); h2.textContent = `Section ${sec}: ${data[sec].title}`; secDiv.appendChild(h2);
+        data[sec].subsections.forEach(sub => {
+          const h3 = document.createElement('h3'); h3.textContent = sub.subheading; secDiv.appendChild(h3);
+          sub.paragraphs.forEach(txt => {
+            const block = document.createElement('div'); block.className = 'para-block';
+            const btn = document.createElement('button'); btn.textContent = 'C';
+            btn.onclick = function() { const prev = document.activeElement; navigator.clipboard.writeText(txt).then(() => { btn.classList.add('copied'); setTimeout(() => btn.classList.remove('copied'), 1000); if(prev && prev.focus) prev.focus(); }); };
+            const p = document.createElement('p'); p.textContent = txt;
+            block.appendChild(btn); block.appendChild(p); secDiv.appendChild(block);
+          });
+        });
+        content.appendChild(secDiv);
+      });
+      document.getElementById('nav' + Object.keys(data).sort()[0]).classList.add('active');
+    })();
+  </script>
+</body>
+</html>
